@@ -1,22 +1,20 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
-import * as reducers from 'app/reducers/todos';
+import { TodoModule } from 'app/todo/todo.module';
 
 import { AppComponent } from './app.component';
-import { TodosComponent } from './components/todos/todos.component';
-import { TodoComponent } from './components/todo/todo.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    TodosComponent,
-    TodoComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    StoreModule.forRoot(reducers)
+    ReactiveFormsModule,
+    TodoModule,
+    StoreModule.forRoot([])
   ],
   providers: [],
   bootstrap: [AppComponent]
