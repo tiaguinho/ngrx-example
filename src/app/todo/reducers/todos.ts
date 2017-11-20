@@ -1,6 +1,6 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
-import { Todo } from 'app/models/todo';
+import { Todo } from 'app/todo/models/todo';
 import * as todo from '../actions/todo';
 
 export interface State extends EntityState<Todo> {
@@ -12,7 +12,8 @@ export const adapter: EntityAdapter<Todo> = createEntityAdapter<Todo>({
 });
 
 export const initialState: State = adapter.getInitialState({
-    selectedTodoId: null
+    selectedTodoId: null,
+    ids: []
 })
 
 export function reducer(
@@ -26,8 +27,29 @@ export function reducer(
             return adapter.addOne(action.todo, state);
         }
 
+        case todo.EDIT_TODO: {
+            return adapter.updateOne({
+                id: action.id,
+                changes: action.changes
+            }, state);
+        }
+
         case todo.DELETE_TODO: {
             return adapter.removeOne(action.id, state);
+        }
+
+        case todo.DONE_TODO: {
+            return adapter.updateOne({
+                id: action.id,
+                changes: { done: !state.entities[action.id].done }
+            }, state);
+        }
+
+        case todo.SELECT_TODO: {
+            return {
+                ...state,
+                selectedTodoId: action.id
+            };
         }
 
         default: {
@@ -48,8 +70,14 @@ export const getTodosEntitiesState = createSelector(
 );
 
 export const {
-    selectIds,
-    selectEntities,
-    selectAll,
-    selectTotal
-} = adapter.getSelectors();
+    selectIds: getTodosIds,
+    selectEntities: getTodosEntities,
+    selectAll: getTodosAll,
+    selectTotal: getTodosTotal
+} = adapter.getSelectors(getTodosState);
+
+export const getSelectedTodo = createSelector(
+    getTodosEntitiesState,
+    getSelectedId,
+    (entities, id) => entities[id]
+)

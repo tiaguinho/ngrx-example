@@ -4,12 +4,12 @@ import {
   Input,
   OnInit
 } from '@angular/core';
-import { Todo } from 'app/models/todo';
+import { Todo } from 'app/todo/models/todo';
 
 @Component({
   selector: 'app-todos',
   templateUrl: './todos.component.html',
-  styleUrls: ['./todos.component.css'],
+  styleUrls: ['./todos.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodosComponent implements OnInit {
