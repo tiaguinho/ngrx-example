@@ -1,1 +1,22 @@
-<app-todo *ngFor="let todo of data" [todo]="todo"></app-todo>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th width="50"></th>
+            <th>Task name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let todo of data" >
+            <td><input type="checkbox" [checked]="todo.complete" (change)="changeStatus(todo.id)" /></td>
+            <td><app-todo [todo]="todo"></app-todo></td>
+            <td>
+                <ng-container *ngIf="!todo.complete">
+                    <button type="button" class="btn btn-sm btn-outline-info" (click)="edit(todo.id)"><i class="fa fa-pencil"></i></button>
+                    <button type="button" class="btn btn-sm btn-danger" (click)="delete(todo.id)"><i class="fa fa-trash"></i></button>
+                </ng-container>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
