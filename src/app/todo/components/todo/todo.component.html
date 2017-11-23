@@ -1,4 +1,3 @@
-<label [ngClass]="{'done': todo.done}">
-    <input type="checkbox" [checked]="todo.done" (change)="changeStatus(todo.id)" />
+<span [ngClass]="{'complete': todo.complete}">
     {{ todo.task }}
-</label>
+</span>
