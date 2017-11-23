@@ -1,21 +1,29 @@
 <div class="container">
 
-  <h1 class="text-center">My Todo List</h1>
+  <div class="row">
+    <div class="col-md-12 text-center">
+        <h1>My Todo App</h1>
+        <p>Just a simple todo app created using ngrx</p>
+    </div>
+  </div>
 
   <div class="row">
 
     <div class="col-md-3">
-      <form [formGroup]="todoForm">
+      <h5>Todo:</h5>
+
+      <form (submit)="onSubmit(form)" [formGroup]="form">
+          <input type="hidden" class="form-control" id="id" formControlName="id"/>
+          <input type="hidden" class="form-control" id="complete" formControlName="complete"/>
           <div class="form-group">
-            <label for="taks">Task</label>
-            <input type="text" class="form-control" id="task" formControlName="task"/>
+            <input type="text" class="form-control" id="task" placeholder="task name" formControlName="task"/>
           </div>
-          <button type="button" class="btn btn-primary" (click)="add()">Add</button>
+          <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Save</button>
       </form>
+      
     </div>
 
     <div class="col-md-9">
-      <h5>List of Todos</h5>
       <app-todos [data]="todos | async"></app-todos>
     </div>
 
